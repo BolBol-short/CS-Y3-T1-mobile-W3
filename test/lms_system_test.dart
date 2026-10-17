@@ -1,6 +1,6 @@
 import 'package:test/test.dart';
 
-import '../service/lms_system.dart';
+import '../lib/service/lms_system.dart';
 
 void main() {
   test('creates a student', () {
