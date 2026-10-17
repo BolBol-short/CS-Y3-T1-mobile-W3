@@ -35,6 +35,7 @@ class LmsSystem {
   }
 
   // Student Functions
+  // add a student
   void addStudent({required String studentId, required String studentName}) {
     // ! Student shall not exist already
     Student? student = _findStudentOrNull(studentId);
@@ -44,7 +45,8 @@ class LmsSystem {
 
     students.add(Student(id: studentId, name: studentName));
   }
- 
+
+  // remove a student
   void removeStudent({required String studentId}) {
     Student? student = _findStudentOrNull(studentId);
     if (student == null) {
@@ -54,6 +56,7 @@ class LmsSystem {
     students.removeWhere((student) => student.id == studentId);
  
   }
+  
   // Student helper functions
   Student? _findStudentOrNull(String studentId) {
     for (Student s in students) {
@@ -63,4 +66,52 @@ class LmsSystem {
     }
     return null; // not found
   } 
+
+  // Enrollment
+  // add student to a course
+  // enroll a student
+  void enrollStudent({required String studentId, required String courseId}){
+    
+    Student? enrollStudent = _findStudentOrNull(studentId);
+    if (enrollStudent == null) {
+      throw Exception('Student $studentId not found');
+    }
+    
+    Course? enrollCourse = _findCourseOrNull(courseId);
+    if (enrollCourse == null){
+      throw Exception('Course with Id: $courseId is not found!');
+    }
+
+    for (var s in enrollCourse.studentIds){
+      if (s == enrollStudent.id){
+        throw Exception('Student with Id: $studentId already enrolled in course Id: $courseId');
+      }
+    }
+
+    enrollCourse.studentIds.add(enrollStudent.id);
+  }
+
+  // remove a student from a course
+  void discardStudent({required String studentId, required String courseId}){
+    Student? tempStudent = _findStudentOrNull(studentId);
+    if (tempStudent == null) {
+      throw Exception('Student $studentId not found');
+    }
+    
+    Course? tempCourse = _findCourseOrNull(courseId);
+    if (tempCourse == null){
+      throw Exception('Course with Id: $courseId is not found!');
+    }
+
+    for (var s in tempCourse.studentIds){
+      if (s == studentId){
+        break;
+      }
+      if (tempCourse.studentIds[-1] == s && s != studentId){
+        throw Exception('Student with Id: $studentId is not enroll in this course Id: $courseId');
+      }
+    }
+
+    tempCourse.studentIds.removeWhere((s) => s == studentId);
+  }
 }
