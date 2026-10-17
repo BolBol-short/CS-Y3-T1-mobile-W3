@@ -5,5 +5,5 @@ class Course {
 
   Course({required this.id, required this.name});
 
-  
+  //
 }
