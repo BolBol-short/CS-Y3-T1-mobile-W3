@@ -54,7 +54,14 @@ class LmsSystem {
     }
     // 1- Remove student from the students list
     students.removeWhere((student) => student.id == studentId);
- 
+
+    // 2- Remove the student from every course in which they enrolled
+    for (var course in courses){
+      course.studentIds.removeWhere((c) => c == studentId);
+    }
+
+    // 3- Remove every exisiting results belong to the student
+
   }
   
   // Student helper functions
@@ -92,7 +99,7 @@ class LmsSystem {
   }
 
   // remove a student from a course
-  void discardStudent({required String studentId, required String courseId}){
+  void discardStudentFromCourse({required String studentId, required String courseId}){
     Student? tempStudent = _findStudentOrNull(studentId);
     if (tempStudent == null) {
       throw Exception('Student $studentId not found');
@@ -113,5 +120,34 @@ class LmsSystem {
     }
 
     tempCourse.studentIds.removeWhere((s) => s == studentId);
+  }
+
+  // Result
+  // add result to a student in a course
+  void addResult({required String studentId, required String courseId, required double score}){
+    Student? tempStudent = _findStudentOrNull(studentId);
+    if (tempStudent == null) {
+      throw Exception('Student $studentId not found');
+    }
+
+    Course? exisitingCourse = _findCourseOrNull(courseId);
+    if (exisitingCourse == null){
+      throw Exception('Course with Id: $courseId is not found!');
+    }
+
+    
+  }
+
+  // remove result from a student in a course
+  void removeResult({required String studentId, required String courseId}){
+    Student? tempStudent = _findStudentOrNull(studentId);
+    if (tempStudent == null) {
+      throw Exception('Student $studentId not found');
+    }
+
+    Course? exisitingCourse = _findCourseOrNull(courseId);
+    if (exisitingCourse == null){
+      throw Exception('Course with Id: $courseId is not found!');
+    }
   }
 }
