@@ -41,8 +41,33 @@ void main() {
   // task 2: enroll a student in a course
   test('Enroll a student in a course', () {
     final lms = LmsSystem();
-    lms.addCourse(courseId: 'C1', courseName: 'CyberSecurity');
-    lms.addStudent(studentId: 'S1', studentName: 'Bolbol');
-    lms.enrollStudent(studentId: 'S1', courseId: 'C1');
+      lms.addCourse(courseId: 'C1', courseName: 'CyberSecurity');
+      lms.addStudent(studentId: 'S1', studentName: 'Bolbol');
+
+      lms.enrollStudent(studentId: 'S1', courseId: 'C1');
+      expect(lms.courses.first.studentIds.first, lms.students.first.id);
+
+      // reject since student doesn't exisits
+      expect(() => lms.enrollStudent(studentId: 'S2', courseId: 'C1'), throwsException);
+      // reject since course doesn't exists
+      expect(() => lms.enrollStudent(studentId: 'S1', courseId: 'C2'), throwsException);
+      // reject duplication
+      expect(() => lms.enrollStudent(studentId: 'S1', courseId: 'C1'), throwsException);
+
+  });
+
+  // task 3 : remove a student from a course
+  test('Remove a student from a course', () {
+
+  });
+
+  // task 4 : Add a result to a course
+  test('Add a result to a course', () {
+
+  });
+
+  // task 5 : remove a student result
+  test('Remove a student\'s result', () {
+    
   });
  }
