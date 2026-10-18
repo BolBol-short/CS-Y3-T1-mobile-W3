@@ -50,7 +50,7 @@ class LmsSystem {
 
   // remove a student
   // precondition: student exists
-  // postcondition: remove every refernece to the student
+  // postcondition: remove every reference to the student
   // rule: everything related (enroll in courses and student's results) to student will be removed
   void removeStudent({required String studentId}) {
     Student? student = _findStudentOrNull(studentId);
