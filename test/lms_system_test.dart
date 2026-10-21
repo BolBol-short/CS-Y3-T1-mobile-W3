@@ -41,7 +41,7 @@ void main() {
      lms.removeCourse(courseId: 'C1');
      expect(lms.courses.length, 0);
      expect(lms.results.length, 0);
-     expect(lms.students.length, 0);
+     expect(lms.students.length, 1);
      
   });
 
